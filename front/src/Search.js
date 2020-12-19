@@ -1,23 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Search(props) {
-  const [sexo, setSexo] = useState();
-  const [edad, setEdad] = useState();
-  const [ciudad, setCiudad] = useState();
-  const [aficion, setAficion] = useState();
-
+  const [sexo, setSexo] = useState("")
+  const [respuesta, setRespuesta] = useState("");
+  const [edadTop, setEdadtop] = useState(0);
+  const [edadDown, setEdaddown] = useState(0);
+  const [ciudad, setCiudad] = useState("");
+  const [aficiones, setAficiones] = useState("");
+  const [imprimir, setImprimir] = useState("")
+  const [llamada, setLlamada] = useState("")
+  
   const eligeSexo = (e) => {
-    setSexo(e.target.value);
+    setSexo(e.target.value)
+  }
+  const eligeEdadtop = (e) => {
+    setEdadtop(e.target.value);
   };
-  const eligeEdad = (e) => {
-    setEdad(e.target.value);
+  const eligeEdaddown = (e) => {
+    setEdaddown(e.target.value);
   };
   const eligeCiudad = (e) => {
     setCiudad(e.target.value);
   };
   const eligeAficion = (e) => {
-    setAficion(e.target.value);
+    setAficiones(e.target.value);
   };
+
+  useEffect(()=>{
+    fetch("http://localhost:3001/buscar/usuarios", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      sexo: sexo,
+      edadTop: edadTop,
+      edadDown: edadDown,
+      ciudad: ciudad,
+      aficiones: aficiones,
+    }),
+  })
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (datos) {
+      setRespuesta(datos)
+      console.log("respuesta OK")
+      const contactos = respuesta.map(function(lista) {
+        return <li>{lista}</li>
+      })
+      setImprimir(contactos)
+    });
+  },[llamada])
+
+ const buscar = () => {
+    setLlamada(true)
+  }
 
 
   return (
@@ -38,14 +76,14 @@ function Search(props) {
       </select>
       <input
         type="Text"
-        value={edad}
-        onChange={eligeEdad}
+        value={edadTop}
+        onChange={eligeEdadtop}
         placeholder="Edad mínima"
       ></input>
       <input
         type="Text"
-        value={edad}
-        onChange={eligeEdad}
+        value={edadDown}
+        onChange={eligeEdaddown}
         placeholder="Edad máxima"
       ></input>
       <select onChange={eligeCiudad}>
@@ -69,7 +107,12 @@ function Search(props) {
         <option value="Viajar">Viajar</option>
         <option value="Videojuegos">Jugar a videojuegos</option>
       </select>
+      <button onClick={buscar}>Buscar</button>
+      <div>
+        <div>{imprimir}</div>
       </div>
+      </div>
+      
   );
   }
 

@@ -8,21 +8,26 @@ function Delete(props) {
     setNombre(e.target.value);
   };
 
-  function eliminar() {
-    fetch("http://localhost:3001/eliminarusuario", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nombre: nombre }),
-    })
-      .then(function (res) {
-        return res.json();
+  const eliminar =()=>{
+      useEffect(()=>{
+        fetch("http://localhost:3001/eliminarusuario", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre: nombre }),
       })
-      .then(function (datos) {
-        setMensaje(datos.mensaje);
-      });
-  }
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (datos) {
+          setMensaje(datos.mensaje);
+        });
+  
+      },[])
+    }
+    
+  
   if (mensaje == "") {
     return (
       <div>

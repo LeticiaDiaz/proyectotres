@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Inicio(props) {
   const [nombre, setNombre] = useState("");
@@ -36,8 +36,9 @@ function Inicio(props) {
     setEmail(e.target.value);
   };
 
-  function registrar() {
-    fetch("http://localhost:3001/nuevousuario", {
+  function Registrar() {
+    useEffect(()=>{
+      fetch("http://localhost:3001/nuevousuario", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,6 +61,7 @@ function Inicio(props) {
         setMensaje(datos.mensaje);
         console.log(datos)
       });
+    },[])
   }
 
   if (mensaje == "") {
@@ -120,7 +122,7 @@ function Inicio(props) {
           <option value="Viajar">Viajar</option>
           <option value="Videojuegos">Jugar a videojuegos</option>
         </select>
-        <button onClick={registrar}>Registrarme</button>
+        <button onClick={Registrar()}>Registrarme</button>
       </div>
     );
   } else {
