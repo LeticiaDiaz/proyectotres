@@ -9,7 +9,7 @@ function Delete(props) {
   };
 
   const eliminar =()=>{
-      useEffect(()=>{
+        console.log(nombre)
         fetch("http://localhost:3001/eliminarusuario", {
         method: "DELETE",
         headers: {
@@ -22,10 +22,11 @@ function Delete(props) {
         })
         .then(function (datos) {
           setMensaje(datos.mensaje);
+          console.log(datos.datos)
         });
   
-      },[])
-    }
+      }
+    
     
   
   if (mensaje == "") {
