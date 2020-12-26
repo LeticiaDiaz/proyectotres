@@ -1,7 +1,8 @@
 import "./App.css";
 import Search from "./Search";
-import Delete from "./Delete"
+import Delete from "./Delete";
 import Inicio from "./Inicio";
+import Cabecera from "./Cabecera";
 
 import { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -18,6 +19,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Cabecera />
         <Route exact path="/search">
           <Search />
         </Route>

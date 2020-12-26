@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 
 function Delete(props) {
   const [nombre, setNombre] = useState("");
@@ -29,7 +29,7 @@ function Delete(props) {
     
     
   
-  if (mensaje == "") {
+  if (mensaje === "") {
     return (
       <div>
         <h2>

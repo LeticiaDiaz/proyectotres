@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Search(props) {
-  const [sexo, setSexo] = useState("")
-  const [respuesta, setRespuesta] = useState("");
-  const [edadTop, setEdadtop] = useState(0);
-  const [edadDown, setEdaddown] = useState(0);
+  const [sexo, setSexo] = useState("");
+  const [respuesta, setRespuesta] = useState([]);
+  const [edadTop, setEdadtop] = useState();
+  const [edadDown, setEdaddown] = useState();
   const [ciudad, setCiudad] = useState("");
   const [aficiones, setAficiones] = useState("");
-  const [imprimir, setImprimir] = useState("")
-  const [llamada, setLlamada] = useState("")
+  const [foto, setFoto] = useState("");
+  const [email, setEmail] = useState("");
   
+
   const eligeSexo = (e) => {
-    setSexo(e.target.value)
-  }
+    setSexo(e.target.value);
+  };
   const eligeEdadtop = (e) => {
     setEdadtop(e.target.value);
   };
@@ -26,37 +27,41 @@ function Search(props) {
     setAficiones(e.target.value);
   };
 
-  useEffect(()=>{
+  const buscar = () => {
     fetch("http://localhost:3001/buscar/usuarios", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      sexo: sexo,
-      edadTop: edadTop,
-      edadDown: edadDown,
-      ciudad: ciudad,
-      aficiones: aficiones,
-    }),
-  })
-    .then(function (res) {
-      return res.json();
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sexo: sexo,
+        edadTop: parseInt(edadTop),
+        edadDown: parseInt(edadDown),
+        ciudad: ciudad,
+        aficiones: aficiones,
+      }),
     })
-    .then(function (datos) {
-      setRespuesta(datos)
-      console.log("respuesta OK")
-      const contactos = respuesta.map(function(lista) {
-        return <li>{lista}</li>
+      .then(function (res) {
+        return res.json();
       })
-      setImprimir(contactos)
-    });
-  },[llamada])
+      .then((datos) => {
+        setRespuesta(datos)
+        
+        console.log(datos);
+      });
+  };
 
- const buscar = () => {
-    setLlamada(true)
-  }
-
+  const respuestaHTML = respuesta.map((lista) => {
+    return(
+      <div key={lista._id}>
+     <h3>{lista.nombre}</h3>
+     <p>{lista.edad}, {lista.ciudad}, {lista.buscando}, {lista.aficiones}, 
+     {lista.foto}</p>
+     <img src={lista.foto}/>
+     <p>{lista.email}</p>
+     </div>
+    )
+  });
 
   return (
     <div>
@@ -65,7 +70,7 @@ function Search(props) {
       </h2>
       <p>
         ¡Pide por esa boquita! Nosotros te haremos una selección de lo mejorcito
-        que tenemos.{" "}
+        que tenemos.
       </p>
       <select onChange={eligeSexo}>
         <option disabled selected>
@@ -76,14 +81,14 @@ function Search(props) {
       </select>
       <input
         type="Text"
-        value={edadTop}
-        onChange={eligeEdadtop}
+        value={edadDown}
+        onChange={eligeEdaddown}
         placeholder="Edad mínima"
       ></input>
       <input
         type="Text"
-        value={edadDown}
-        onChange={eligeEdaddown}
+        value={edadTop}
+        onChange={eligeEdadtop}
         placeholder="Edad máxima"
       ></input>
       <select onChange={eligeCiudad}>
@@ -109,11 +114,10 @@ function Search(props) {
       </select>
       <button onClick={buscar}>Buscar</button>
       <div>
-        <div>{imprimir}</div>
+        {respuestaHTML}
       </div>
-      </div>
-      
+    </div>
   );
-  }
+}
 
 export default Search;

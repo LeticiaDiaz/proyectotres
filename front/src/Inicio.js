@@ -1,4 +1,17 @@
 import { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Form,
+  FormGroup,
+  FormLabel,
+  FromControl,
+  Button,
+  Container,
+  Row,
+  Col,
+  Alert
+} from "react-bootstrap";
+import "./App.css";
 
 function Inicio(props) {
   const [nombre, setNombre] = useState("");
@@ -7,9 +20,9 @@ function Inicio(props) {
   const [ciudad, setCiudad] = useState("");
   const [buscando, setBuscando] = useState("");
   const [aficiones, setAficiones] = useState("");
-  const [mensaje, setMensaje] = useState("");
   const [foto, setFoto] = useState("");
   const [email, setEmail] = useState("");
+  const [alert, setAlert] = useState("")
 
   const registroNombre = (e) => {
     setNombre(e.target.value);
@@ -36,9 +49,8 @@ function Inicio(props) {
     setEmail(e.target.value);
   };
 
-  function Registrar() {
-    useEffect(()=>{
-      fetch("http://localhost:3001/nuevousuario", {
+  function registrar() {
+    fetch("http://localhost:3001/nuevousuario", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,15 +70,14 @@ function Inicio(props) {
         return res.json();
       })
       .then(function (datos) {
-        setMensaje(datos.mensaje);
-        console.log(datos)
+        console.log(datos);
+        setAlert(<Alert variant="success">Te has registrado Correctamente!</Alert>)
       });
-    },[])
   }
-
-  if (mensaje == "") {
     return (
-      <div>
+      <Container>
+        <Row>
+        <Col>
         <h2>
           <strong>¿Qué hace alguien como tú en un sitio como este?</strong>
         </h2>
@@ -75,7 +86,72 @@ function Inicio(props) {
           gusta hacer en tu tiempo libre... Cuanto más nos cuentes, ¡más fácil
           será buscar gente afín a ti!
         </p>
-        <input
+        <Form>
+        <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Control
+            value={nombre}
+            onChange={registroNombre}
+            type="text"
+            placeholder="Nombre"
+          />
+       </Form.Group>
+        <Form.Group controlId="exampleForm.ControlSelect1">
+          <Form.Control as="select" onChange={registroSexo}>
+            <option disabled selected>
+              Sexo
+            </option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+          </Form.Control>
+         </Form.Group>
+         <Form.Group controlId="exampleForm.ControlInput2">
+            <Form.Control
+              value={edad}
+              onChange={registroEdad}
+              type="text"
+              placeholder="Edad"
+            />
+          </Form.Group>
+          <Form.Group>
+          <Form.Control as="select" onChange={registroCiudad}>
+            <option disabled selected>
+              Ciudad
+            </option>
+            <option value="Madrid">Madrid</option>
+            <option value="Barcelona">Barcelona</option>
+          </Form.Control>
+          </Form.Group>
+          <Form.Group>
+          <Form.Control as="select" onChange={registroBuscando}>
+          <option disabled selected>
+              Estoy buscando
+            </option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+          </Form.Control>
+          </Form.Group>
+          <Form.Group>
+          <Form.Control as="select" onChange={registroAficiones}>
+          <option disabled selected>
+              Aficiones
+            </option>
+            <option value="Deporte">Hacer deporte</option>
+            <option value="Peliculas">Ir al cine</option>
+            <option value="Musica">Escuchar música</option>
+            <option value="Compras">Ir de compras</option>
+            <option value="Teatro">Ir al teatro</option>
+            <option value="Fiesta">Salir de fiesta</option>
+            <option value="Leer">Leer</option>
+            <option value="Viajar">Viajar</option>
+            <option value="Videojuegos">Jugar a videojuegos</option>
+          </Form.Control>
+          </Form.Group>
+          <Form.Group>
+          <Button onClick={registrar}>Registrarme</Button>
+          </Form.Group>
+          
+          
+          {/*  <input
           type="text"
           value={nombre}
           onChange={registroNombre}
@@ -122,12 +198,14 @@ function Inicio(props) {
           <option value="Viajar">Viajar</option>
           <option value="Videojuegos">Jugar a videojuegos</option>
         </select>
-        <button onClick={Registrar()}>Registrarme</button>
-      </div>
-    );
-  } else {
-    return <h2>{mensaje}</h2>;
-  }
+        <button onClick={registrar}>Registrarme</button> */}
+        {/* </Form.Group> */}
+      </Form>
+      {alert}
+      </Col>
+      </Row>
+      </Container>
+    )
 }
 
 export default Inicio;
