@@ -1,4 +1,13 @@
 import {useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Form, 
+  Col,
+  Row,
+  Container,
+  Button
+} from "react-bootstrap";
+import "./App.css";
 
 function Delete(props) {
   const [nombre, setNombre] = useState("");
@@ -31,7 +40,10 @@ function Delete(props) {
   
   if (mensaje === "") {
     return (
-      <div>
+      <>
+        <Container>
+        <Row>
+          <Col>
         <h2>
           <strong>No intentes atraparme, ya he aprendido a volar</strong>
         </h2>
@@ -43,14 +55,24 @@ function Delete(props) {
           Si ya no quieres continuar con nosotros sólo tienes que hacer click a
           continuación.
         </p>
+        <Form>
+          <Form.Group>
         <input
           type="text"
           value={nombre}
           onChange={borraNombre}
           placeholder="Nombre"
         ></input>
-        <button onClick={eliminar}>Darme de baja</button>
-      </div>
+        </Form.Group>
+         <Form.Group>
+                <Button onClick={eliminar}>Darme de baja</Button>
+              </Form.Group>
+              </Form>
+              </Col>
+        </Row>
+        </Container>
+        
+      </>
     );
   } else {
     return <h2>{mensaje}</h2>;

@@ -9,7 +9,7 @@ import {
   Container,
   Row,
   Col,
-  Alert
+  Alert,
 } from "react-bootstrap";
 import "./App.css";
 
@@ -22,7 +22,7 @@ function Inicio(props) {
   const [aficiones, setAficiones] = useState("");
   const [foto, setFoto] = useState("");
   const [email, setEmail] = useState("");
-  const [alert, setAlert] = useState("")
+  const [alert, setAlert] = useState("");
 
   const registroNombre = (e) => {
     setNombre(e.target.value);
@@ -71,141 +71,92 @@ function Inicio(props) {
       })
       .then(function (datos) {
         console.log(datos);
-        setAlert(<Alert variant="success">Te has registrado Correctamente!</Alert>)
+        setAlert(
+          <Alert variant="success">Te has registrado Correctamente!</Alert>
+        );
       });
   }
-    return (
-      <Container>
-        <Row>
+  return (
+    <Container>
+      <Row>
         <Col>
-        <h2>
-          <strong>¿Qué hace alguien como tú en un sitio como este?</strong>
-        </h2>
-        <p>
-          ¡Queremos conocerte mejor! Háblanos un poco de ti, dónde vives, qué te
-          gusta hacer en tu tiempo libre... Cuanto más nos cuentes, ¡más fácil
-          será buscar gente afín a ti!
-        </p>
-        <Form>
-        <Form.Group controlId="exampleForm.ControlInput1">
-          <Form.Control
-            value={nombre}
-            onChange={registroNombre}
-            type="text"
-            placeholder="Nombre"
-          />
-       </Form.Group>
-        <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Control as="select" onChange={registroSexo}>
-            <option disabled selected>
-              Sexo
-            </option>
-            <option value="Hombre">Hombre</option>
-            <option value="Mujer">Mujer</option>
-          </Form.Control>
-         </Form.Group>
-         <Form.Group controlId="exampleForm.ControlInput2">
-            <Form.Control
-              value={edad}
-              onChange={registroEdad}
-              type="text"
-              placeholder="Edad"
-            />
-          </Form.Group>
-          <Form.Group>
-          <Form.Control as="select" onChange={registroCiudad}>
-            <option disabled selected>
-              Ciudad
-            </option>
-            <option value="Madrid">Madrid</option>
-            <option value="Barcelona">Barcelona</option>
-          </Form.Control>
-          </Form.Group>
-          <Form.Group>
-          <Form.Control as="select" onChange={registroBuscando}>
-          <option disabled selected>
-              Estoy buscando
-            </option>
-            <option value="Hombre">Hombre</option>
-            <option value="Mujer">Mujer</option>
-          </Form.Control>
-          </Form.Group>
-          <Form.Group>
-          <Form.Control as="select" onChange={registroAficiones}>
-          <option disabled selected>
-              Aficiones
-            </option>
-            <option value="Deporte">Hacer deporte</option>
-            <option value="Peliculas">Ir al cine</option>
-            <option value="Musica">Escuchar música</option>
-            <option value="Compras">Ir de compras</option>
-            <option value="Teatro">Ir al teatro</option>
-            <option value="Fiesta">Salir de fiesta</option>
-            <option value="Leer">Leer</option>
-            <option value="Viajar">Viajar</option>
-            <option value="Videojuegos">Jugar a videojuegos</option>
-          </Form.Control>
-          </Form.Group>
-          <Form.Group>
-          <Button onClick={registrar}>Registrarme</Button>
-          </Form.Group>
-          
-          
-          {/*  <input
-          type="text"
-          value={nombre}
-          onChange={registroNombre}
-          placeholder="Nombre"
-        ></input>
-        <select onChange={registroSexo}>
-          <option disabled selected>
-            Sexo
-          </option>
-          <option value="Hombre">Hombre</option>
-          <option value="Mujer">Mujer</option>
-        </select>
-        <input
-          type="text"
-          value={edad}
-          onChange={registroEdad}
-          placeholder="Edad"
-        ></input>
-        <select onChange={registroCiudad}>
-          <option disabled selected>
-            Vivo en...
-          </option>
-          <option value="Madrid">Madrid</option>
-          <option value="Barcelona">Barcelona</option>
-        </select>
-        <select onChange={registroBuscando}>
-          <option disabled selected>
-            Estoy buscando...
-          </option>
-          <option value="Hombre">Hombre</option>
-          <option value="Mujer">Mujer</option>
-        </select>
-        <select onChange={registroAficiones}>
-          <option disabled selected>
-            Aficiones
-          </option>
-          <option value="Deporte">Hacer deporte</option>
-          <option value="Peliculas">Ir al cine</option>
-          <option value="Musica">Escuchar música</option>
-          <option value="Compras">Ir de compras</option>
-          <option value="Teatro">Ir al teatro</option>
-          <option value="Fiesta">Salir de fiesta</option>
-          <option value="Leer">Leer</option>
-          <option value="Viajar">Viajar</option>
-          <option value="Videojuegos">Jugar a videojuegos</option>
-        </select>
-        <button onClick={registrar}>Registrarme</button> */}
-        {/* </Form.Group> */}
-      </Form>
-      {alert}
-      </Col>
+          <h2>
+            <strong>¿Qué hace alguien como tú en un sitio como este?</strong>
+          </h2>
+          <p>
+            ¡Queremos conocerte mejor! Háblanos un poco de ti, dónde vives, qué
+            te gusta hacer en tu tiempo libre... Cuanto más nos cuentes, ¡más
+            fácil será buscar gente afín a ti!
+          </p>
+          <Form>
+            <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Control
+                value={nombre}
+                onChange={registroNombre}
+                type="text"
+                placeholder="Nombre"
+              />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Control as="select" onChange={registroSexo}>
+                <option disabled selected>
+                  Sexo
+                </option>
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlInput2">
+              <Form.Control
+                value={edad}
+                onChange={registroEdad}
+                type="text"
+                placeholder="Edad"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control as="select" onChange={registroCiudad}>
+                <option disabled selected>
+                  Ciudad
+                </option>
+                <option value="Madrid">Madrid</option>
+                <option value="Barcelona">Barcelona</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control as="select" onChange={registroBuscando}>
+                <option disabled selected>
+                  Estoy buscando
+                </option>
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control as="select" onChange={registroAficiones}>
+                <option disabled selected>
+                  Aficiones
+                </option>
+                <option value="Deporte">Hacer deporte</option>
+                <option value="Peliculas">Ir al cine</option>
+                <option value="Musica">Escuchar música</option>
+                <option value="Compras">Ir de compras</option>
+                <option value="Teatro">Ir al teatro</option>
+                <option value="Fiesta">Salir de fiesta</option>
+                <option value="Leer">Leer</option>
+                <option value="Viajar">Viajar</option>
+                <option value="Videojuegos">Jugar a videojuegos</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group>
+              <Button onClick={registrar}>Registrarme</Button>
+            </Form.Group>
+          </Form>
+          {alert}
+        </Col>
       </Row>
-      </Container>
-    )
+    </Container>
+  );
 }
 
 export default Inicio;
