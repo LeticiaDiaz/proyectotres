@@ -41,3 +41,20 @@
 #navbar {
   background-color: rgb(221, 46, 81);
 }
+#container_landing {
+  min-width: 100%;
+}
+#container_landing img {
+  width: 100%;
+}
+
+
+
+.bg {
+  
+  background-image: url("https://i.ibb.co/ThLtgLQ/people-2597454-960-720.webp");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }

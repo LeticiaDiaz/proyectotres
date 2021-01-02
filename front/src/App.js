@@ -1,4 +1,5 @@
 import "./App.css";
+import Landing from "./Landing"
 import Search from "./Search";
 import Delete from "./Delete";
 import Inicio from "./Inicio";
@@ -20,6 +21,9 @@ function App() {
     <div>
       <BrowserRouter>
         <Cabecera />
+        <Route exact path="/">
+          <Landing />
+        </Route>
         <Route exact path="/search">
           <Search />
         </Route>

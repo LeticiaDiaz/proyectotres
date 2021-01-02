@@ -81,12 +81,10 @@ function Inicio(props) {
       <Row>
         <Col>
           <h2>
-            <strong>¿Qué hace alguien como tú en un sitio como este?</strong>
+            <strong>Mi descripción</strong>
           </h2>
           <p>
-            ¡Queremos conocerte mejor! Háblanos un poco de ti, dónde vives, qué
-            te gusta hacer en tu tiempo libre... Cuanto más nos cuentes, ¡más
-            fácil será buscar gente afín a ti!
+            ¡Escribe lo que te gusta! Se sincerx, original, divertidx, misteriosx... Pero, sobre todo, ¡sé tu mismx!
           </p>
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">
@@ -147,6 +145,14 @@ function Inicio(props) {
                 <option value="Viajar">Viajar</option>
                 <option value="Videojuegos">Jugar a videojuegos</option>
               </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlInput2">
+              <Form.Control
+                value={foto}
+                onChange={registroFoto}
+                type="text"
+                placeholder="Foto"
+              />
             </Form.Group>
             <Form.Group>
               <Button onClick={registrar}>Registrarme</Button>

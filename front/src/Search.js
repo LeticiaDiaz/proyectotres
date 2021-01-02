@@ -20,6 +20,7 @@ function Search(props) {
   const [edadDown, setEdaddown] = useState();
   const [ciudad, setCiudad] = useState("");
   const [aficiones, setAficiones] = useState("");
+  const [buscando, setBuscando] = useState("");
   const [foto, setFoto] = useState("");
   const [email, setEmail] = useState("");
 
@@ -38,6 +39,9 @@ function Search(props) {
   const eligeAficion = (e) => {
     setAficiones(e.target.value);
   };
+  const eligeBuscando = (e) => {
+    setBuscando(e.target.value)
+  }
 
   const buscar = () => {
     fetch("http://localhost:3001/buscar/usuarios", {
@@ -51,6 +55,7 @@ function Search(props) {
         edadDown: parseInt(edadDown),
         ciudad: ciudad,
         aficiones: aficiones,
+        buscando: buscando,
       }),
     })
       .then(function (res) {
@@ -58,7 +63,6 @@ function Search(props) {
       })
       .then((datos) => {
         setRespuesta(datos);
-
         console.log(datos);
       });
   };
@@ -128,15 +132,24 @@ function Search(props) {
         <Row>
           <Col>
             <h2>
-              <strong>¿Qué clase de aventura has venido a buscar?</strong>
+              <strong>Descubrir</strong>
             </h2>
             <p>
-              ¡Pide por esa boquita! Nosotros te haremos una selección de lo
-              mejorcito que tenemos.
+            Guarda tus búsquedas para encontrar fácilmente a lxs solterxs afines a ti.
+
             </p>
             <Form>
-              <Form.Group>
+            <Form.Group>
                 <Form.Control as="select" onChange={eligeSexo}>
+                  <option disabled selected>
+                    Soy...
+                  </option>
+                  <option value="Hombre">Hombre</option>
+                  <option value="Mujer">Mujer</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control as="select" onChange={eligeBuscando}>
                   <option disabled selected>
                     Estoy buscando...
                   </option>

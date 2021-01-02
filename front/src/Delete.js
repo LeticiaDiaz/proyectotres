@@ -1,12 +1,6 @@
-import {useState } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Form, 
-  Col,
-  Row,
-  Container,
-  Button
-} from "react-bootstrap";
+import { Form, Col, Row, Container, Button, Alert } from "react-bootstrap";
 import "./App.css";
 
 function Delete(props) {
@@ -17,66 +11,60 @@ function Delete(props) {
     setNombre(e.target.value);
   };
 
-  const eliminar =()=>{
-        console.log(nombre)
-        fetch("http://localhost:3001/eliminarusuario", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nombre: nombre }),
+  const eliminar = () => {
+    console.log(nombre);
+    fetch("http://localhost:3001/eliminarusuario", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nombre: nombre }),
+    })
+      .then(function (res) {
+        return res.json();
       })
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (datos) {
-          setMensaje(datos.mensaje);
-          console.log(datos.datos)
-        });
-  
-      }
-    
-    
-  
-  if (mensaje === "") {
-    return (
-      <>
-        <Container>
+      .then(function (datos) {
+        datos.error
+          ? setMensaje(<Alert variant="danger">{datos.mensaje}</Alert>)
+          : setMensaje(<Alert variant="success">{datos.mensaje}</Alert>);
+        console.log(datos.datos);
+      });
+  };
+
+  return (
+    <>
+      <Container>
         <Row>
           <Col>
-        <h2>
-          <strong>No intentes atraparme, ya he aprendido a volar</strong>
-        </h2>
-        <p>
-          ¿Has encontrado el amor? ¿O te has dado cuenta de que solx se está de
-          maravilla?
-        </p>
-        <p>
-          Si ya no quieres continuar con nosotros sólo tienes que hacer click a
-          continuación.
-        </p>
-        <Form>
-          <Form.Group>
-        <input
-          type="text"
-          value={nombre}
-          onChange={borraNombre}
-          placeholder="Nombre"
-        ></input>
-        </Form.Group>
-         <Form.Group>
+            <h2>
+              <strong>Suspensión de tu perfil</strong>
+            </h2>
+            <p>
+              ¡Atención! Si te marchas de HiPeople dejarás de tener acceso a:
+            </p>
+            <p>Toda la información o el contenido presente en tu perfil.</p>
+            <p>Todos tus contactos.</p>
+            <p>Todo el historial de tus mensajes enviados y recibidos.</p>
+            <p> <strong>Si ya no quieres continuar con nosotros sólo tienes que poner tu nombre a continuación</strong></p>
+            <Form>
+              <Form.Group>
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={borraNombre}
+                  placeholder="Nombre"
+                ></input>
+              </Form.Group>
+              <Form.Group>
                 <Button onClick={eliminar}>Darme de baja</Button>
               </Form.Group>
-              </Form>
-              </Col>
+            </Form>
+          </Col>
         </Row>
-        </Container>
-        
-      </>
-    );
-  } else {
-    return <h2>{mensaje}</h2>;
-  }
+        <Row>{mensaje}</Row>
+      </Container>
+    </>
+  );
 }
 
 export default Delete;

@@ -106,7 +106,10 @@ app.put("/buscar/usuarios", function (req, res) {
           aficiones: req.body.aficiones,
         },
         {
-          sexo: req.body.sexo,
+          $and: [
+            { sexo: req.body.buscando },
+            { buscando: req.body.sexo },
+          ],
         },
       ],
     })
@@ -143,10 +146,16 @@ app.delete("/eliminarusuario", function (req, res) {
       if (err !== null) {
         res.send(err);
       } else {
-        res.send({ datos: datos, mensaje: "Usuario eliminado" });
+        if(datos.deletedCount > 0){
+        res.send({ datos: datos, error: false, mensaje: "Usuario eliminado" });
+        }else{
+          res.send({datos: datos, error: true, mensaje: "Usuario no encontrado"})
+        }
       }
     }
   );
 });
+
+
 
 app.listen(3001);
