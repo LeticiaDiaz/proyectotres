@@ -9,6 +9,7 @@ import {
   Card,
   CardDeck,
   Modal,
+  Alert,
 } from "react-bootstrap";
 import "./App.css";
 
@@ -23,6 +24,7 @@ function Search(props) {
   const [buscando, setBuscando] = useState("");
   const [foto, setFoto] = useState("");
   const [email, setEmail] = useState("");
+  const [feedBack, setFeedback] = useState("");
 
   const eligeSexo = (e) => {
     setSexo(e.target.value);
@@ -40,10 +42,12 @@ function Search(props) {
     setAficiones(e.target.value);
   };
   const eligeBuscando = (e) => {
-    setBuscando(e.target.value)
-  }
+    setBuscando(e.target.value);
+  };
 
   const buscar = () => {
+    respuestaHTML = "";
+    setFeedback("");
     fetch("http://localhost:3001/buscar/usuarios", {
       method: "PUT",
       headers: {
@@ -62,13 +66,17 @@ function Search(props) {
         return res.json();
       })
       .then((datos) => {
-        setRespuesta(datos);
-        console.log(datos);
+        if (datos.error) {
+          setFeedback(<Alert variant="danger">{datos.mensaje}</Alert>);
+          setRespuesta(datos.datos);
+        } else {
+          setRespuesta(datos.datos);
+        }
       });
   };
 
   function FormularioContacto(props) {
-    const [asunto, setAsunto] = useState("")
+    const [asunto, setAsunto] = useState("");
 
     const manageAsunto = (e) => {
       setAsunto(e.target.value);
@@ -90,7 +98,11 @@ function Search(props) {
             <Form.Row>
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Asunto:</Form.Label>
-                <Form.Control as="input" onChange={manageAsunto} value={asunto} />
+                <Form.Control
+                  as="input"
+                  onChange={manageAsunto}
+                  value={asunto}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Group>
@@ -106,7 +118,7 @@ function Search(props) {
     );
   }
 
-  const respuestaHTML = respuesta.map((lista) => {
+  var respuestaHTML = respuesta.map((lista) => {
     return (
       <Card>
         <Card.Img style={{ maxWidth: 250 }} variant="top" src={lista.foto} />
@@ -135,11 +147,11 @@ function Search(props) {
               <strong>Descubrir</strong>
             </h2>
             <p>
-            Guarda tus búsquedas para encontrar fácilmente a lxs solterxs afines a ti.
-
+              Guarda tus búsquedas para encontrar fácilmente a lxs solterxs
+              afines a ti.
             </p>
             <Form>
-            <Form.Group>
+              <Form.Group>
                 <Form.Control as="select" onChange={eligeSexo}>
                   <option disabled selected>
                     Soy...
@@ -202,6 +214,7 @@ function Search(props) {
               <Form.Group>
                 <Button onClick={buscar}>Buscar</Button>
               </Form.Group>
+              <Form.Group>{feedBack}</Form.Group>
             </Form>
           </Col>
         </Row>

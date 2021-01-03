@@ -84,7 +84,8 @@ function Inicio(props) {
             <strong>Mi descripción</strong>
           </h2>
           <p>
-            ¡Escribe lo que te gusta! Se sincerx, original, divertidx, misteriosx... Pero, sobre todo, ¡sé tu mismx!
+            ¡Escribe lo que te gusta! Se sincerx, original, divertidx,
+            misteriosx... Pero, sobre todo, ¡sé tu mismx!
           </p>
           <Form>
             <Form.Group controlId="exampleForm.ControlInput1">

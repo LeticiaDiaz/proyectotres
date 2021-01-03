@@ -45,7 +45,13 @@ function Delete(props) {
             <p>Toda la información o el contenido presente en tu perfil.</p>
             <p>Todos tus contactos.</p>
             <p>Todo el historial de tus mensajes enviados y recibidos.</p>
-            <p> <strong>Si ya no quieres continuar con nosotros sólo tienes que poner tu nombre a continuación</strong></p>
+            <p>
+              {" "}
+              <strong>
+                Si ya no quieres continuar con nosotros sólo tienes que poner tu
+                nombre a continuación
+              </strong>
+            </p>
             <Form>
               <Form.Group>
                 <input

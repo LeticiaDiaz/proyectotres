@@ -1,5 +1,5 @@
 import "./App.css";
-import Landing from "./Landing"
+import Landing from "./Landing";
 import Search from "./Search";
 import Delete from "./Delete";
 import Inicio from "./Inicio";

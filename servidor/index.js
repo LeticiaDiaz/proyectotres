@@ -3,6 +3,7 @@ const MongoClient = require("mongodb").MongoClient;
 const cors = require("cors");
 
 const app = express();
+const config = require("./config.json");
 
 let db;
 
@@ -10,16 +11,13 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-MongoClient.connect(
-  "mongodb+srv://leti:678074@cluster0.mbokh.mongodb.net/contactos?retryWrites=true&w=majority",
-  function (err, client) {
-    if (err !== null) {
-      console.log(err);
-    } else {
-      db = client.db("contactos");
-    }
+MongoClient.connect(config.mongopath, function (err, client) {
+  if (err !== null) {
+    console.log(err);
+  } else {
+    db = client.db("contactos");
   }
-);
+});
 
 app.get("/usuarios", function (req, res) {
   db.collection("contactos")
@@ -106,10 +104,7 @@ app.put("/buscar/usuarios", function (req, res) {
           aficiones: req.body.aficiones,
         },
         {
-          $and: [
-            { sexo: req.body.buscando },
-            { buscando: req.body.sexo },
-          ],
+          $and: [{ sexo: req.body.buscando }, { buscando: req.body.sexo }],
         },
       ],
     })
@@ -117,8 +112,17 @@ app.put("/buscar/usuarios", function (req, res) {
       if (err != null) {
         res.send(err);
       } else {
-        res.send(datos);
-        console.log(datos);
+        if (datos.length > 0) {
+          res.send({ error: false, datos, mensaje: "Hemos encontrado:" });
+          console.log(datos);
+        } else {
+          res.send({
+            error: true,
+            datos,
+            mensaje:
+              "No hemos encontrado a nadie con esas características, ¿quieres realizar una nueva búsqueda?",
+          });
+        }
       }
     });
 });
@@ -146,16 +150,22 @@ app.delete("/eliminarusuario", function (req, res) {
       if (err !== null) {
         res.send(err);
       } else {
-        if(datos.deletedCount > 0){
-        res.send({ datos: datos, error: false, mensaje: "Usuario eliminado" });
-        }else{
-          res.send({datos: datos, error: true, mensaje: "Usuario no encontrado"})
+        if (datos.deletedCount > 0) {
+          res.send({
+            datos: datos,
+            error: false,
+            mensaje: "Usuario eliminado",
+          });
+        } else {
+          res.send({
+            datos: datos,
+            error: true,
+            mensaje: "Usuario no encontrado",
+          });
         }
       }
     }
   );
 });
-
-
 
 app.listen(3001);
